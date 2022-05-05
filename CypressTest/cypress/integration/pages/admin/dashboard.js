@@ -6,23 +6,23 @@ export class AdminDashboard {
         cy.wait(300);
     }
     createPost() {
-        cy.get('a#ember27').click();
+        cy.get('a.gh-nav-new-post').click();
         cy.wait(300);
     }
     getPosts() {
-        cy.get('a#ember26.ember-view').click();
+        cy.get('li > a.gh-nav-list-new[href="#/posts/"]').click();
         cy.wait(300);
     }
     getPages() {
-        cy.get('a#ember28.ember-view').click();
+        cy.get('li > a.gh-nav-list-new[href="#/pages/"]').click();
         cy.wait(300);
     }
     getTags() {
-        cy.get('a#ember29.ember-view').click();
+        cy.get('li > a.gh-nav-list-new[href="#/tags/"]').click();
         cy.wait(300);
     }
     getMembers() {
-        cy.get('a#ember30.ember-view').click();
+        cy.get('li > a.gh-nav-list-new[href="#/members/"]').click();
         cy.wait(300);
     }
 } 

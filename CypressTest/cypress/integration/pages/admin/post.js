@@ -18,8 +18,18 @@ export class Post {
     }
     writePostArticle() {
         let paragraph = faker.lorem.paragraph();
-        cy.get('article.koenig-editor > div > div > p').invoke('text')
-            .then(textFunc => console.log('texticoooooo', textFunc));
-            // .type(paragraph, {force: true});
+        cy.get('article.koenig-editor > div > div > p')
+            .invoke('text', paragraph);
+    }
+    exitEditorWithBackButton() {
+        cy.get('a.gh-editor-back-button').click();
+        cy.wait(300);
+    }
+    getPostListItems(callback) {
+        cy.get('li.gh-posts-list-item').then(posts => callback(posts));
+    }
+    getPostFromListByTitle(title, callback) {
+        let postItem = cy.contains('li', title).first();
+        callback(postItem);
     }
 }
