@@ -55,4 +55,38 @@ describe('Funcionalidad: Configuración de Post/Pages', () =>{
             expect(articleContent).to.contain(paragraph);
         });
     });
+
+    it('E002: Modificar Excerpt de un Post y Revisar con Usuario', () => {
+        // GIVEN (additional to the login and dashboard navigation)
+        // that the admin navitages to the dashboard, and selects the option
+        // to create a post, and writes a title and the content for the post
+        dashboard.createPost();
+        let title = post.writeTitle();
+        let articleContent = post.writeArticle();
+
+        // WHEN the admin opens the editor settings menu, and selects the
+        // excerpt field to erase it an and writes a new excerpt, and
+        // publishes the post
+        post.clickEditorSettingsToggle();
+        let excerpt = post.writeExcerpt();
+        post.clickEditorSettingsToggle();
+        post.publish();
+
+        // THEN after navegating to the reader's homepage, the post should 
+        // appear (be identifiable) using the new excerpt to find it, and 
+        // the title and the content that appears in the article should 
+        // match the text that the admin previously wrote after
+        // clicking the article.
+        homePage.navigate();
+        homePage.getFirstPostByExcerpt(excerpt, pItem => {
+            expect(pItem).to.exist;
+            pItem.click();
+            cy.wait(300);
+
+            article.readTitle((txt) => expect(txt).to.equal(title));
+            article.readContent(paragraph => {
+                expect(articleContent).to.contain(paragraph);
+            });
+        });
+    });
 });
