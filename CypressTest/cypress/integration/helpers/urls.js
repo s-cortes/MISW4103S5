@@ -12,8 +12,11 @@ const adminUrls = {
         listUrl: `${adminUrl}/pages`
     }
 };
+const userUrls = {
+    homeUrl: baseUrl
+};
 
 // admin.user@test.com
 // Admin@Test$MISW4103
 
-export {adminUrls}
+export {adminUrls, userUrls}
