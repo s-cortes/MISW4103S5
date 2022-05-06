@@ -4,10 +4,13 @@ const adminUrl = `${baseUrl}/ghost/#`;
 const adminUrls = {
     loginUrl: `${adminUrl}/signin`,
     dasboardUrl: `${adminUrl}/dashboard`,
+    editorUrl: `${adminUrl}/editor`,
     postUrls: {
-        postEditorUrl: `${adminUrl}/editor/post`,
-        postListUrl: `${adminUrl}/posts`,
+        listUrl: `${adminUrl}/posts`,
     },
+    pageUrls: {
+        listUrl: `${adminUrl}/pages`
+    }
 };
 
 // admin.user@test.com
