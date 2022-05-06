@@ -89,4 +89,31 @@ describe('Funcionalidad: Configuración de Post/Pages', () =>{
             });
         });
     });
+
+    it('E003: Eliminación de Post y revisión en la página principal', () => {
+        // GIVEN (additional to the login and dashboard navigation)
+        // that the admin navitages to the Post editor, and writes 
+        // a title and the content for the post, and goes back to the 
+        post.navigateToEditor();
+        let title = post.writeTitle();
+        post.writeArticle();
+
+        // WHEN the admin opens the editor settings menu, and selects the
+        // option to delete the post, and confirms the deletion.
+        post.clickEditorSettingsToggle();
+        post.deleteArticle();
+
+        // THEN the post should not appear in the list of posts.
+        post.navigateToPosts();
+        let hasPosts = post.hasPostsInList();
+        if(hasPosts) {
+            post.getPostListItems(($p, index, $list) => {
+                post.findTitleOnPostItem($p, (txt) => {
+                    expect(txt).to.not.equal(title);
+                });
+            });
+        } else {
+            expect(hasPosts).to.equal(false);
+        }
+    });
 });
