@@ -87,6 +87,75 @@ class Post extends Editor {
         let postItem = cy.contains('li', title).first();
         callback(postItem);
     }
+    gotPostFromListByTitle(title) {
+        cy.contains('a.gh-post-list-title', title).click();
+        cy.wait(300);
+    }
+    clickPublishButton() {
+        cy.get('div.gh-publishmenu-trigger').click();
+        cy.wait(300);
+    }
+    clickSetItLiveButton() {
+        cy.get('div.gh-publishmenu-radio').first().click();
+        cy.wait(300);
+    }
+
+    clickScheduleForLateButton() {
+        cy.contains('div.gh-publishmenu-radio', "Schedule it for later").first().click();
+        cy.wait(300);
+        cy.get('div.gh-date-time-picker-time > input').invoke('val').then(timeString => {
+            cy.log(timeString);
+            let hours = timeString.split(':');
+            let actualDate = new Date(Date.UTC(2020, 0, 1, hours[0], hours[1], 0));
+            let scheduledDate = new Date(actualDate.getTime() + (3*60000));
+            cy.wait(500);
+            let hplusm = scheduledDate.getUTCHours() + ':' + scheduledDate.getUTCMinutes();
+            cy.get('div.gh-date-time-picker-time > input').clear().type(hplusm);
+            cy.wait(300);
+        });
+    }
+
+    clickScheduleForLateButtonError() {
+        cy.contains('div.gh-publishmenu-radio', "Schedule it for later").first().click();
+        cy.wait(300);
+        cy.get('div.gh-date-time-picker-time > input').invoke('val').then(timeString => {
+            cy.log(timeString);
+            let hours = timeString.split(':');
+            let actualDate = new Date(Date.UTC(2020, 0, 1, hours[0], hours[1], 0));
+            let scheduledDate = new Date(actualDate.getTime() - (3*60000));
+            cy.wait(500);
+            let hplusm = scheduledDate.getUTCHours() + ':' + scheduledDate.getUTCMinutes();
+            cy.get('div.gh-date-time-picker-time > input').clear().type(hplusm);
+            cy.wait(300);
+            cy.get('button.gh-publishmenu-button').click();
+            cy.wait(300);
+        });
+    }
+    clickPublish() {
+        cy.get('button.gh-publishmenu-button').click();
+        cy.wait(300);
+        cy.get('div.modal-content > div.modal-footer > button.gh-btn-black').click();
+        cy.wait(300)
+    }
+    clickUnpublish() {
+        cy.get('button.gh-publishmenu-button').click();
+        cy.wait(300);
+    }
+    clickUpdateButton() {
+        cy.get('div.gh-publishmenu').click();
+        cy.wait(300);
+    }
+    navigateToPostFromHome() {
+        cy.visit(`${adminUrls.editorUrl}/${this.editPage}`);
+        cy.wait(300);
+    }
+    getPostByTitleFromHome(title, callback) {
+        let postItem = cy.contains('article', title).first();
+        callback(postItem);
+    }
+    getTimeErrorPost(callback){
+        cy.get('div.gh-date-time-picker-error').first().then((item => callback(item)));
+    }
 }
 
 class Page extends Editor {
