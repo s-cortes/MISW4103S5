@@ -149,6 +149,51 @@ Then('I should see in the Editor the text {kraken-string} that was written befor
     expect(textContent.trim()).to.equal($textContent);
 });
 
+// Post Publish Step Commands -----------------------------------------------------------------
+
+When('I click on publish post', async function() {
+    return await this.driver.$('div[class="gh-publishmenu"]').click();
+});
+
+When('I click on publish', async function() {
+    return await this.driver.$('button[class="gh-publishmenu-button"]').click();
+});
+
+When('I click on schedule it for later', async function() {
+    return await this.driver.$('div.gh-publishmenu-radio:contains("Schedule it for later")').click();
+});
+
+
+When('I confirm publication', async function() {
+    return await this.driver.$('div.modal-content > div.modal-footer > button.gh-btn-black').click();
+});
+
+When('I write a wrong date', async function() {
+    let postHour = await this.driver.$('div.gh-date-time-picker-time > input');
+    await postHour.click();
+    await postHour.setValue('');
+    return await postHour.setValue("00:00")
+});
+
+When('I navigate to home as not admin', async function ($url, $slug) {
+    return await this.driver.url(`${$url}/`);
+});
+
+Then('I should find the new Post {kraken-string} publish as the first list item', async function($title) {
+    let postItem = await this.driver.$('h2.post-card-title');
+    let titleFound = await postItem.getText();
+    expect(titleFound.trim()).to.equal($title);
+    return await postItem.click(); 
+});
+
+Then('I should find and advertizing title', async function() {
+    let alertTitle = await this.driver.$('div.gh-date-time-picker-error');
+    let alertText = await alertTitle.getText();
+    return await expect(alertText.trim()).to.equal("Must be at least 2 mins in the future");
+});
+
+
+
 // Post List Step Commands ------------------------------------------------------------------------
 Then('I should find the new Post {kraken-string} as the first list item', async function($title) {
     let postItem = await this.driver.$('h3.gh-content-entry-title');
