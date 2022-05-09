@@ -1,6 +1,5 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { assert } = require('chai'); 
-const { faker } = require('@faker-js/faker');
 
 When('I enter email {kraken-string}', async function (email) {
         let element = await this.driver.$('input[name="identification"]');
@@ -23,7 +22,7 @@ When('I click on post', async function () {
 });
 
 When('I click on new post', async function () {
-    let element = await this.driver.$('a[href="#/editor/post/"]');
+     let element = await this.driver.$('a[href="#/editor/post/"]');
      return await element.click();
 });
 
@@ -39,7 +38,7 @@ When('I click on the post title', async function () {
 
 When('I copy a text {kraken-string}', async function ($name_1) {
     let element = await this.driver.$('textarea[placeholder="Post title"]');
-    element.setValue($name_1);
+    await element.setValue($name_1);
     return await element.click();
 });
 
@@ -56,7 +55,7 @@ When('I copy a text on the begin writing your ... section {kraken-string}', asyn
 
 When('I preview it', async function () {
     let element = await this.driver.$('button[class="gh-btn gh-editor-preview-trigger"]');
-    await element.click();    
+    return await element.click();    
 });
 
 Then('I should see the title {kraken-string}', async function ($name_1) {
@@ -144,6 +143,18 @@ When ('I click on Tag option', async function () {
     let element = await this.driver.$('input[class="ember-power-select-trigger-multiple-input"]');     
     return await element.click();
 });
+
+
+Then ('I clic on delete page option', async function () { 
+    let element = await this.driver.$('button[class="gh-btn gh-btn-hover-red gh-btn-icon settings-menu-delete-button"]');     
+    return await element.click();
+});
+
+When ('I clic on delete page button', async function () { 
+    let element = await this.driver.$('button[class="gh-btn gh-btn-red gh-btn-icon ember-view"]');     
+    return await element.click();
+});
+
 
 When ('I select the Tag {kraken-string}', async function (tag) { 
     let element = await this.driver.$('input[class="ember-power-select-trigger-multiple-input"]');     
