@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:2368';
+const baseUrl = 'http://localhost:2369';
 
 const adminUrl = `${baseUrl}/ghost/#`;
 const adminUrls = {
@@ -10,6 +10,9 @@ const adminUrls = {
     },
     pageUrls: {
         listUrl: `${adminUrl}/pages`
+    },
+    tagUrls: {
+        listUrl: `${adminUrl}/tags`
     }
 };
 const userUrls = {

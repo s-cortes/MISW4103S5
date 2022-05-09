@@ -62,6 +62,28 @@ class Editor {
             .click();
         cy.wait(300)
     }
+    getPreview(){
+        cy.get('button[class="gh-btn gh-editor-preview-trigger"]').click();
+        cy.wait(300);
+    }
+    getPreviewContent(title, callback) {
+        let previewItem = cy.get('iframe.gh-pe-iframe').first().its('0');
+        callback(previewItem);
+    }
+    exitPriview(){
+        cy.get('button.gh-editor-back-button').click();
+        cy.wait(300);
+    }
+    clickEditorSettingsView(){
+        cy.get('a.post-view-link').click();
+        cy.wait(300);
+    }
+    singlePublish() {
+        cy.get('div.gh-publishmenu-trigger').click();
+        cy.wait(300);
+        cy.get('button.gh-publishmenu-button').click();
+        cy.wait(300);
+    }
 }
 
 class Post extends Editor {
@@ -113,6 +135,52 @@ class Page extends Editor {
         let postItem = cy.contains('li', title).first();
         callback(postItem);
     }
+    setTagPage(tagName){
+        cy.get('#tag-input').clear().type(tagName).type('{enter}');
+        cy.wait(300);
+    }
+    deletePage(){
+        cy.get('div.settings-menu-content > form > button').click();
+        cy.wait(300);
+        cy.get('div.modal-content > div.modal-footer > button.gh-btn-red').click();
+        cy.wait(300);
+    }
 }
 
-export {Post, Page};
+class Tag {
+
+    navigateToPosts() {
+        cy.visit(adminUrls.tagUrls.listUrl);
+        cy.wait(300);
+    }
+    createNewTag() {
+        cy.get('a.ember-view[href="#/tags/new/"]').first().click();
+        cy.wait(300);
+    }
+    WriteTagName() {
+        let name = faker.lorem.words();
+        cy.get('#tag-name').type(name);
+        cy.wait(300);
+        return name;
+    }
+    ReadTagName(callback) {
+        cy.get('#tag-name').val(val => callback(val));
+    }
+    WriteTagDesc() {
+        let desc = faker.lorem.word();
+        cy.get('#tag-description').type(desc)
+            .invoke('text', desc);
+        return desc;
+    }
+    readTagDesc(callback) {
+        cy.get('#tag-description')
+            .invoke('text').then(txt => callback(txt));
+    }
+    saveTag() {
+        cy.get('button.ember-view[class="gh-btn gh-btn-primary gh-btn-icon ember-view"]').click();
+        cy.wait(300);
+    }
+    
+}
+
+export {Post, Page, Tag};
