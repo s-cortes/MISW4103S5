@@ -5,6 +5,8 @@ import { Post } from "../pages/admin/editor";
 import { UserHomePage } from "../pages/user/home";
 import { Article } from "../pages/user/article";
 
+import { email as adminEmail, password as adminPassword} from "../../fixtures/user.json";
+
 const dashboard = new AdminDashboard();
 const login = new Login();
 const post = new Post();
@@ -19,7 +21,7 @@ const article = new Article();
 describe("Funcionalidad: Publicación de Post/Pages", () => {
   before(() => {
     // GIVEN that the admin user logs-in to ghost
-    login.login("admin.user@test.com", "Admin@Test$MISW4103");
+    login.login(adminEmail, adminPassword);
   });
 
   beforeEach(() => {
