@@ -2,7 +2,7 @@ import { AdminDashboard } from "../pages/admin/dashboard";
 import { Login } from "../pages/admin/login";
 import { Post, Page } from "../pages/admin/editor";
 
-import { email as adminEmail, password as adminPassword} from "../helpers/admin_credentials.json";
+import { email as adminEmail, password as adminPassword} from "../../fixtures/user.json";
 
 const dashboard = new AdminDashboard();
 const login = new Login();

@@ -5,7 +5,7 @@ import { Post } from "../pages/admin/editor";
 import { UserHomePage } from "../pages/user/home";
 import { Article } from "../pages/user/article";
 
-import { email as adminEmail, password as adminPassword} from "../helpers/admin_credentials.json";
+import { email as adminEmail, password as adminPassword} from "../../fixtures/user.json";
 
 const dashboard = new AdminDashboard();
 const login = new Login();
