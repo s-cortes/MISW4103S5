@@ -9,12 +9,16 @@ export class AdminDashboard {
         cy.get('a.gh-nav-new-post').click();
         cy.wait(300);
     }
+    createTag() {
+        cy.get('a.ember-view[href="#/tags/"]').click();
+        cy.wait(300);
+    }
     getPosts() {
         cy.get('a.ember-view[href="#/posts/"]').click();
         cy.wait(300);
     }
     getPages() {
-        cy.get('a.ember-view[href="#/pages/"]').click();
+        cy.get('a.ember-view[href="#/pages/"]').first().click();
         cy.wait(300);
     }
     getTags() {

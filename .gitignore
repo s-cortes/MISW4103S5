@@ -104,5 +104,11 @@ dist
 .tern-port
 .DS_Store
 
+<<<<<<< HEAD
 # Kraken Reports
 */reports
+=======
+#Folders
+reports/
+.kraken/
+>>>>>>> TestScenariosCam

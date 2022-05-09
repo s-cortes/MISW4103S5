@@ -18,7 +18,11 @@ describe('Funcionalidad: Creación de Post/Pages', () =>{
 
     before(() => {
         // GIVEN that the admin user logs-in to ghost
+<<<<<<< HEAD:CypressTest/cypress/integration/end-to-end/escenarios_f001.spec.js
         login.login(adminEmail, adminPassword);
+=======
+        login.login('carlos.cortes.ing@gmail.com', 'Abc1q2w3e4r5t');
+>>>>>>> TestScenariosCam:CypressTest/cypress/integration/end-to-end/escenarios_funcionalidad_uno.js
     });
 
     beforeEach(() => {
@@ -68,5 +72,68 @@ describe('Funcionalidad: Creación de Post/Pages', () =>{
             cy.wait(300);
             page.readArticle((txt) => expect(txt).to.equal(article));
         });
+    });
+
+    it('E003: Creación y edición de un post', () => {
+        // GIVEN (additional to the login)
+
+        // WHEN the admin goes to create a Post, writes a title
+        // and writes text content
+        dashboard.createPost();
+        let title = post.writeTitle();
+        let titleEdited = post.writeTitle();
+        let article = post.writeArticle();
+        let articleEdited = post.writeArticle();
+
+        // THEN the post should appear as the first item in the
+        // list, and the article's context should be the same as
+        // the one written before
+        post.publish();
+        post.exitEditorWithBackButton();
+        
+        post.getPostFromListByTitle(title, (pItem) => {
+            pItem.click();
+        });
+        
+        titleEdited = post.writeTitle();
+        articleEdited= post.writeArticle();
+
+        post.clickEditorSettingsToggle();
+        post.clickEditorSettingsView();
+        post.readArticle((txt) => expect(txt).to.equal(articleEdited));
+    });
+
+    it('E004: Creación de una pagina y su eliminación', () => {
+        // GIVEN (additional to the login)
+
+        // WHEN the admin goes to create a Page, writes a title
+        // and writes text content
+        dashboard.getPages();
+        page.createNewPage();
+
+        let title = page.writeTitle();
+        let article = page.writeArticle();
+
+        // THEN the page should appear as the first item in the
+        // list, and the article's context should be the same as
+        // the one written before
+        page.exitEditorWithBackButton();
+        page.getFirstFromListByTitle(title, (pItem) => {
+            expect(pItem).to.exist;
+            pItem.click();
+            cy.wait(300);
+            page.readArticle((txt) => expect(txt).to.equal(article));
+        });
+
+        page.singlePublish();
+        page.exitEditorWithBackButton();
+        
+        page.getPageFromListByTitle(title, (pItem) => {
+            pItem.click();
+        });
+
+        page.clickEditorSettingsToggle();
+        
+        page.deletePage();
     });
 });
