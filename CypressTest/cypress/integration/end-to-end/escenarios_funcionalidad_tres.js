@@ -83,18 +83,14 @@ describe("Funcionalidad: Publicación de Post/Pages", () => {
 
     homePage.navigate();
     cy.wait(300);
-    post.getPostByTitleFromHome(title, (pItem) => {
+    homePage.getFirstPostByTitle(title, (pItem) => {
       expect(pItem).to.exist;
     });
     cy.wait(300);
 
     post.navigateToPosts();
-    cy.wait(300);
-    post.clickPublishButton();
-    post.clickScheduleForLateButtonError();
-    cy.wait(300);
 
-    post.gotPostFromListByTitle(title);
+    post.goPostFromListByTitle(title);
     post.clickUpdateButton();
     post.clickSetItLiveButton();
     post.clickUnpublish();
@@ -102,8 +98,15 @@ describe("Funcionalidad: Publicación de Post/Pages", () => {
 
     homePage.navigate();
     cy.wait(300);
-    post.getPostByTitleFromHome(title, (pItem) => {
-      expect(pItem).to.exist;
-    });
+    let hasPosts = homePage.hasPostsInList();
+    if (hasPosts) {
+      homePage.getPostListItems(($p, index, $list) => {
+        homePage.findTitleOnPostItem($p, (txt) => {
+          expect(txt).to.not.equal(title);
+        });
+      });
+    } else {
+      expect(hasPosts).to.equal(false);
+    }
   });
 });

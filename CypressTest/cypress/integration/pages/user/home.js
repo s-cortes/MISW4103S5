@@ -13,4 +13,16 @@ export class UserHomePage {
         let postItem = cy.contains('a.post-card-content-link', excerpt).first();
         callback(postItem);
     }
+    hasPostsInList() {
+        let contentList = cy.get('div.post-feed');
+        return contentList.find('article').length > 0;
+    }
+    getPostListItems(callback) {
+        cy.get('article.post-card')
+            .each(($p, index, $list) => callback($p, index, $list));
+    }
+    findTitleOnPostItem(pItem, callback) {
+        cy.wrap(pItem).find('h2.post-card-title')
+            .invoke('text').then(txt => callback(txt));
+    }
 }

@@ -87,8 +87,8 @@ class Post extends Editor {
         let postItem = cy.contains('li', title).first();
         callback(postItem);
     }
-    gotPostFromListByTitle(title) {
-        cy.contains('a.gh-post-list-title', title).click();
+    goPostFromListByTitle(title) {
+        cy.contains('h3.gh-content-entry-title', title).first().click();
         cy.wait(300);
     }
     clickPublishButton() {
