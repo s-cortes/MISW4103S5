@@ -2,6 +2,8 @@ import { AdminDashboard } from "../pages/admin/dashboard";
 import { Login } from "../pages/admin/login";
 import { Post, Page } from "../pages/admin/editor";
 
+import { email as adminEmail, password as adminPassword} from "../helpers/admin_credentials.json";
+
 const dashboard = new AdminDashboard();
 const login = new Login();
 const post = new Post();
@@ -16,7 +18,7 @@ describe('Funcionalidad: Creación de Post/Pages', () =>{
 
     before(() => {
         // GIVEN that the admin user logs-in to ghost
-        login.login('admin.user@test.com', 'Admin@Test$MISW4103');
+        login.login(adminEmail, adminPassword);
     });
 
     beforeEach(() => {
