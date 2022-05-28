@@ -18,7 +18,7 @@ const article = new Article();
  * Agrupación de Escenarios prof Funcionalidad
  * F003: Publicación de Posts/Pages
  */
-describe("Funcionalidad: Publicación de Post/Pages", () => {
+describe("Funcionalidad: Publicación de Post", () => {
   before(() => {
     // GIVEN that the admin user logs-in to ghost
     login.login(adminEmail, adminPassword);
@@ -73,7 +73,7 @@ describe("Funcionalidad: Publicación de Post/Pages", () => {
     });
   });
 
-  it("E004: Publicación programada de un Post y error en programacion", () => {
+  it("E005: Despublicar un post ya publicado", () => {
     // GIVEN the admin user logs in to ghost, WHEN he goes to a created Post, and select Publish and select "Set it live now" and press"Publish", THEN he should see the Post published on Main Page
     dashboard.createPost();
     let title = post.writeTitle();
